@@ -8,6 +8,8 @@
 
 \usepackage{natbib}
 \usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{textcomp}
 
 \begin{document}
 
@@ -56,7 +58,7 @@ How do we distinguish between them?\\
 \textbf{Transactional}
 \begin{itemize}
     \item Queries with ‘interact’ terms (buy, chat,…) or ‘obtaining’ terms
-(e.g. ‘download, get)
+(e.g. ‘download’, ‘get’)
     \item Terms related to movies, songs, lyrics, recipes, images, humour
     \begin{itemize}
         \item Image, audio or video collections (‘audio’, ‘images’, ‘video’)
@@ -128,15 +130,34 @@ An indexing model which reduces the document into a map of words and their frequ
 
 \subsubsection{Term-document Matrix}
 Store the number of occurrences in a matrix where one dimension is terms, and the other is the documents.
+\[
+\bordermatrix{ & Doc1 & Doc2 & Doc3 \cr
+      complexity & 4 & 0 & 3 \cr
+      algorithm & 0 & 0 & 2 \cr
+      entropy & 1 & 1 & 0 } \qquad
+\]
 
 \subsubsection{Term-document Incidence Matrix}
 Just store a 1 if it occurs, 0 otherwise.
+\[
+\bordermatrix{ & Doc1 & Doc2 & Doc3 \cr
+      complexity & 1 & 0 & 1 \cr
+      algorithm & 0 & 0 & 1 \cr
+      entropy & 1 & 1 & 0 } \qquad
+\]
 \newline\newline
 The problem with matrix approach is the matrices will be massive. With 1 million documents, 1000 words per document, and 500k unique words you'd have a matrix of size 500 billion.
 
 \subsubsection{Inverted Index}
 For each term, store a list of all documents that contain it.\\
 The document list for each term will be of varying length so we can use linked lists or variable sized arrays.\\
+\newline
+\newcommand{\sep}{\hspace*{.5em}}
+  \noindent
+  Brutus \textrightarrow \hspace{8.4mm}$\fbox{1} \sep \fbox{2} \sep \fbox{4} \sep \fbox{11} \sep \fbox{31} \sep \fbox{45} \sep \fbox{173} \sep \fbox{174}$\\ \newline
+  Caesar \textrightarrow \hspace{8.4mm}$\fbox{1} \sep \fbox{2} \sep \fbox{4} \sep \fbox{5} \sep \fbox{6} \sep \fbox{16} \sep \fbox{57} \sep \fbox{132}$\\ \newline
+  Calpurnia \textrightarrow \hspace{3mm}$\fbox{1} \sep \fbox{2} \sep \fbox{2} \sep \fbox{31} \sep \fbox{54} \sep \fbox{101}$
+
 \newline
 \textbf{Indexer steps}\\
 \newline
