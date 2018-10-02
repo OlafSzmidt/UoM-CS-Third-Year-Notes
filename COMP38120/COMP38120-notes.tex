@@ -1,0 +1,157 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage[margin=1.45cm]{geometry}
+
+\title{COMP38120 - Documents, Services and Data on the Web}
+\author{Sam Littlefair}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Course Unit Structure}
+\begin{itemize}
+  \item 20 credit module with 1 exam in Summer worth 60\%.
+  \item 2 labs due in Semester 2:
+  \begin{enumerate}
+     \item Week 3 - 25\%.
+     \item Week 11 - 15\%.
+    \end{enumerate}
+\end{itemize}
+
+
+\section{Documents on the Web}
+The “Traditional” Web: Web	pages,	images,	videos,	audio	files,	etc.
+Collectively	known	as	documents - objects	that	can
+be	indexed	(so	that	it	can	be	found) and searched for.
+
+\subsection{Information retrieval}
+Information retrieval is finding material of an unstructured nature that
+satisfies an information need from within large collections (Manning et al 2008).
+IR is not just search engines, it can be other things such as voice controlled assistants like Siri, or music recognition like Shazam.
+There is no obvious structure, unlike a rigidly structured database - but doesn't mean there's no structure at all, there is document structure (paragraphs, headings..) and mark-up (XML, HTML).
+
+\subsection{Informational need} %REFACTOR THIS SECTION
+Informational need is the topic about which the user desires to know more about.
+
+\begin{itemize}
+    \item \textbf{Informational:} Need to learn about something (80\% of queries)
+    \item \textbf{Navigational:} Need to go to some page (10\%)
+    \item \textbf{Transactional:} Need to do something using the Web (10\%)
+\end{itemize}
+How do we distinguish between them?\\
+\newline
+\textbf{Navigational}
+\begin{itemize}
+    \item Company/business/org name
+    \item Domain suffix
+    \item Length of query (\textless3)
+\end{itemize}
+\newpage
+\textbf{Transactional}
+\begin{itemize}
+    \item Queries with ‘interact’ terms (buy, chat,…) or ‘obtaining’ terms
+(e.g. ‘download, get)
+    \item Terms related to movies, songs, lyrics, recipes, images, humour
+    \begin{itemize}
+        \item Image, audio or video collections (‘audio’, ‘images’, ‘video’)
+        \item Movies, songs, images, multimedia, compression file extensions
+(jpg, zip, …)
+        \item Entertainment terms (pictures, games, …)
+    \end{itemize}
+\end{itemize}
+\textbf{Informational}
+\begin{itemize}
+    \item Use of question words, many phrases
+    \item Informational items (‘list of…’)
+    \item Query length \textgreater2
+    \item Neither navigational nor transactional i.e., easier to identify
+N and T (?)
+\end{itemize}
+\subsection{User Behaviour}
+\begin{itemize}
+    \item About 3 searches per day for an average user.
+    \item 16\% to 20\% of queries that get asked every day have
+    never been asked before.
+    \item 78\% of queries not modified.
+    \item User queries are very short. 38\% of queries single word, 22\% 2 words etc. All full of spelling mistakes!
+\end{itemize}
+
+\subsection{Information Retrieval System}
+An IR system finds the similarities of a query representation to
+document representation. Documents must be indexed – each document is reduced to set of index terms.
+\begin{itemize}
+    \item Index language: A means of representing documents and queries.
+    \item Search is focused on index: Map queries to index i.e. determine similarity of a query to a document via index items.
+\end{itemize}
+\subsubsection{Indexing process (offline)}
+\begin{enumerate}
+    \item Acquire documents through crawling, feeds, etc.
+    \item Generate index for each document
+    \item Store the index in an easy-to-search form
+\end{enumerate}
+\subsubsection{The retrieval process (online)}
+\begin{enumerate}
+    \item Assist the user in formulating the query (did you mean, autocomplete..)
+    \item Transform the query (“index” the query)
+    \item Map the query’s representation against the index
+    \item Retrieve and rank the results
+    \item Help users browse the results and re-formulate the query
+    \item Log user’s actions etc.
+\end{enumerate}
+
+\subsection{Representation}
+\subsubsection{PubMed - Medical Publications}
+MeSH (Medical Subject Headings) is the a manually controlled
+vocabulary used for indexing articles for PubMed.\\
+Very hard to maintain, indexing can take months.
+
+\subsubsection{Bag of Words (BoW)}
+An indexing model which reduces the document into a map of words and their frequencies.\\
+\newline
+\textbf{Pros}
+\begin{itemize}
+    \item IR matching is about the degree of overlap between a query and document representations so it's efficient.
+\end{itemize}
+\textbf{Cons}
+\begin{itemize}
+    \item Meaning could be lost without order, but not a huge deal.
+    \item Meaning could be lost without context.
+    \item Might not work for all languages.
+    \item Negations are lost.
+\end{itemize}
+
+\subsubsection{Term-document Matrix}
+Store the number of occurrences in a matrix where one dimension is terms, and the other is the documents.
+
+\subsubsection{Term-document Incidence Matrix}
+Just store a 1 if it occurs, 0 otherwise.
+\newline\newline
+The problem with matrix approach is the matrices will be massive. With 1 million documents, 1000 words per document, and 500k unique words you'd have a matrix of size 500 billion.
+
+\subsubsection{Inverted Index}
+For each term, store a list of all documents that contain it.\\
+The document list for each term will be of varying length so we can use linked lists or variable sized arrays.\\
+\newline
+\textbf{Indexer steps}\\
+\newline
+\textbf{1. Token sequence}
+\begin{itemize}
+    \item Create a sequence of Token, Document ID pairs.
+\end{itemize}
+\textbf{2. Sort}
+\begin{itemize}
+    \item Sort by terms, then by document ID.
+\end{itemize}
+\textbf{3. Dictionary \& Postings}
+\begin{itemize}
+    \item Multiple term entries in a single document are merged
+    \item Split into Dictionary and Postings
+    \item Document frequency (for each term) is also added
+\end{itemize}
+\end{document}
